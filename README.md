@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 
 Run the application:
 ```
-$ python -m that_is_me_on_github --help
+$ python -m that_is_me_on_github generate --username hustclf --org_filter 'apache' --repo_filter 'hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat'
 ```
 
 To run the tests:
