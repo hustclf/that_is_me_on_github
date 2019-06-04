@@ -207,14 +207,14 @@ def that_is_me_on_github():
 def generate(
     username, auth_username: str, auth_password: str, org_filter: str, repo_filter: str
 ):
+    if auth_username and auth_password:
+        global g
+        g = Github(auth_username, auth_password)
+
     user = single_user(username)
     if not user:
         click.echo("User {} Not Found.".format(username))
         click.Abort
-
-    if auth_username and auth_password:
-        global g
-        g = Github(auth_username, auth_password)
 
     click.echo("Please wait for a few seconds.")
 
