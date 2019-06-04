@@ -15,6 +15,7 @@ Run the application:
 ```
 $ python -m that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
 ```
+A markdown file named `that_is_me_on_github.md` will be generated under current folder.
 
 
 ## Notice:

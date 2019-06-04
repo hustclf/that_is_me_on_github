@@ -204,7 +204,9 @@ def that_is_me_on_github():
     default="",
     help="Provide github account to avoid reaching rate limit",
 )
-def generate(username, auth_username: str, auth_password: str, org_filter: str, repo_filter: str):
+def generate(
+    username, auth_username: str, auth_password: str, org_filter: str, repo_filter: str
+):
     user = single_user(username)
     if not user:
         click.echo("User {} Not Found.".format(username))
@@ -214,11 +216,9 @@ def generate(username, auth_username: str, auth_password: str, org_filter: str, 
         global g
         g = Github(auth_username, auth_password)
 
-    click.echo('Please wait for a few seconds.')
+    click.echo("Please wait for a few seconds.")
 
-    org_filter = (
-        [item.strip() for item in org_filter.split(",")] if org_filter else []
-    )
+    org_filter = [item.strip() for item in org_filter.split(",")] if org_filter else []
     repo_filter = (
         [item.strip() for item in repo_filter.split(",")] if repo_filter else []
     )
@@ -235,4 +235,6 @@ if __name__ == "__main__":
     try:
         that_is_me_on_github()
     except RateLimitExceededException:
-        click.echo('Github rate limit reached, Please provide username, password or api_token, and try again')
+        click.echo(
+            "Github rate limit reached, Please provide username, password or api_token, and try again"
+        )
