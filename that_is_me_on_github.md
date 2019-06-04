@@ -6,7 +6,7 @@ username: [Lifei Chen](https://github.com/hustclf)
 followers: 11
         
 ## Owned Repostories
-Total: 7
+Total: 8
         
 * [weixinCrawler](https://github.com/hustclf/weixinCrawler), folks: 7
             
@@ -20,11 +20,29 @@ Total: 7
             
 * [hustclf.github.io](https://github.com/hustclf/hustclf.github.io), folks: 0
             
+* [that_is_me_on_github](https://github.com/hustclf/that_is_me_on_github), folks: 0
+            
 * [gitment-comments](https://github.com/hustclf/gitment-comments), folks: 0
             
 ## Pull Requests
-Total: 5
+Total: 12
 
+kafka
+            
+* [KAFKA-8187 Bugfix for branch 2.0](https://github.com/apache/kafka/pull/6849) \[open\]
+                
+* [KAFKA-8187: Add wait time for other thread in the same jvm to free the locks](https://github.com/apache/kafka/pull/6818) \[closed\]
+                
+* [KAFKA-8348 document optimized](https://github.com/apache/kafka/pull/6707) \[closed\]
+                
+* [MINOR:Replace duplicated code with common function in utils](https://github.com/apache/kafka/pull/6819) \[closed\]
+                
+* [MINOR: Document improvement for JMH-Benchmark module](https://github.com/apache/kafka/pull/6682) \[closed\]
+                
+faust
+            
+* [MINOR: fix bug of example in doc](https://github.com/robinhood/faust/pull/353) \[closed\]
+                
 flink-deployer
             
 * [Replace Cancel with Terminate](https://github.com/ing-bank/flink-deployer/pull/37) \[closed\]
@@ -36,6 +54,10 @@ flink-deployer
 kubeedge
             
 * [doc: optimize slack url in readme and readme_zn](https://github.com/kubeedge/kubeedge/pull/255) \[closed\]
+                
+flink
+            
+* [[FLINK-11819][Documentation] Fix wrong description about attribute order by supported now](https://github.com/apache/flink/pull/7901) \[closed\]
                 
 kafkacat
             
