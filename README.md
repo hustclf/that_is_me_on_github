@@ -13,10 +13,10 @@ $ pip install -r requirements.txt
 
 Run the application:
 ```
-$ python -m that_is_me_on_github generate --username hustclf --org_filter 'apache' --repo_filter 'hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat'
+$ python -m that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
 ```
 
-To run the tests:
-```
-    $ pytest
-```
+
+## Notice:
+--auth_username and --auth_password are optional parameters. 
+Without auth info, it is easily to reach the rate limit of github api, you can provide your account to avoid it.

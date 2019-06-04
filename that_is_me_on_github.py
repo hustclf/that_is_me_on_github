@@ -1,7 +1,7 @@
 import click
 from typing import List
 from typing import Dict
-from github import Github
+from github import Github, RateLimitExceededException
 from github.Commit import Commit
 from github.Issue import Issue
 from github.NamedUser import NamedUser
@@ -194,17 +194,33 @@ def that_is_me_on_github():
     default="",
     help="Repositories you want to collect, default all repositories related with username",
 )
-def generate(username, org_filter: str, repo_filter: str):
+@click.option(
+    "--auth_username",
+    default="",
+    help="Provide github account to avoid reaching rate limit",
+)
+@click.option(
+    "--auth_password",
+    default="",
+    help="Provide github account to avoid reaching rate limit",
+)
+def generate(username, auth_username: str, auth_password: str, org_filter: str, repo_filter: str):
     user = single_user(username)
     if not user:
         click.echo("User {} Not Found.".format(username))
         click.Abort
 
+    if auth_username and auth_password:
+        global g
+        g = Github(auth_username, auth_password)
+
+    click.echo('Please wait for a few seconds.')
+
     org_filter = (
-        [item.strip() for item in eval(org_filter).split(",")] if org_filter else []
+        [item.strip() for item in org_filter.split(",")] if org_filter else []
     )
     repo_filter = (
-        [item.strip() for item in eval(repo_filter).split(",")] if repo_filter else []
+        [item.strip() for item in repo_filter.split(",")] if repo_filter else []
     )
 
     Render().render(
@@ -216,4 +232,7 @@ def generate(username, org_filter: str, repo_filter: str):
 
 
 if __name__ == "__main__":
-    that_is_me_on_github()
+    try:
+        that_is_me_on_github()
+    except RateLimitExceededException:
+        click.echo('Github rate limit reached, Please provide username, password or api_token, and try again')
