@@ -85,7 +85,7 @@ Total: {}
     @staticmethod
     def _render_issues(issues: Dict[str, List[Issue]]):
         tpl = """
- ## Issues:
+## Issues:
 Total: {}
         """.format(
             sum(len(items) for repo_name, items in issues.items())
