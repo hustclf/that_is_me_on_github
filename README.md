@@ -1,8 +1,11 @@
 # that_is_me_on_github
+[![CircleCI](https://circleci.com/gh/hustclf/that_is_me_on_github.svg?style=svg)](https://circleci.com/gh/hustclf/that_is_me_on_github)
+
 
 that_is_me_on_github is a Python CLI application used for collect user's github contribution and generate markdown.
 
 *The project is under actively development, not able to use. Welcome issue and pr to make it come true asap.
+
 
 ## Basic setup
 
