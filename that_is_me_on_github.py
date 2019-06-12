@@ -36,9 +36,19 @@ class Render:
 ## User Info
 username: [{}]({})
 
+email: [{}]({})
+
 followers: {}
+
+![avatar]({} "avatar")
+
         """.format(
-            user_info.name, user_info.html_url, user_info.followers
+            user_info.name,
+            user_info.html_url,
+            user_info.email,
+            user_info.email,
+            user_info.followers,
+            user_info.avatar_url,
         )
 
     @staticmethod
@@ -52,9 +62,9 @@ Total: {}
 
         for repo in repos:
             tpl += """
-* [{}]({}), folks: {}
+* [{}]({}), stars: {}, folks: {}
             """.format(
-                repo.name, repo.html_url, repo.forks
+                repo.name, repo.html_url, repo.stargazers_count, repo.forks
             )
 
         return tpl
@@ -75,9 +85,12 @@ Total: {}
             )
             for pr in items:
                 tpl += """
-* [{}]({}) \[{}\]
+* [{}]({}) \[{}\] \[{}\]
                 """.format(
-                    pr.title, pr.html_url, pr.state
+                    pr.title,
+                    pr.html_url,
+                    pr.state,
+                    "merged" if pr.as_pull_request().is_merged() else "not_merged",
                 )
 
         return tpl
