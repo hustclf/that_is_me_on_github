@@ -8,9 +8,6 @@
 
 that_is_me_on_github is a Python CLI application used for collect user's github contribution and generate markdown.
 
-*The project is under active development. Welcome issue and pr to make it come true asap.
-
-
 ## Basic setup
 
 Install the requirements:
@@ -31,7 +28,35 @@ $ docker pull hustclf/that_is_me_on_github
 $ docker run -it --rm hustclf/that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat > markdown.md
 ```
 
-
 ## Notice:
---auth_username and --auth_password are optional parameters. 
+`--auth_username` and `--auth_password` are optional parameters. 
 Without auth info, it is easily to reach the rate limit of github api, you can provide your account to avoid it.
+
+For example:
+```bash
+$ python -m that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat \\ 
+--do_auth True --auth_username <github_username> --auth_password <github password>
+```
+Replace <github_username> and <github_password> with your own.
+
+## Development
+that_is_me_on_github use pipenv for local development.
+
+### 1. Install pipenv
+```bash
+$ pip install pipenv
+```
+
+### 2. Build a pipenv environment
+```bash
+$ cd path-to-the-project/
+$ pipenv shell
+```
+
+### 3. Under development.
+Pycharm is recommended ide.
+
+### 4. Run tests.
+```bash
+$ pytest tests/
+```
