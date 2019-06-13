@@ -1,4 +1,3 @@
-
 # That Is Me On Github
 ## User Info
 username: [Lifei Chen](https://github.com/hustclf)
@@ -15,11 +14,11 @@ Total: 7
         
 * [weixinCrawler](https://github.com/hustclf/weixinCrawler), stars: 9, folks: 7
             
+* [that_is_me_on_github](https://github.com/hustclf/that_is_me_on_github), stars: 6, folks: 3
+            
 * [RateLimiter](https://github.com/hustclf/RateLimiter), stars: 6, folks: 0
             
 * [PHPRedisSentinel](https://github.com/hustclf/PHPRedisSentinel), stars: 2, folks: 0
-            
-* [that_is_me_on_github](https://github.com/hustclf/that_is_me_on_github), stars: 1, folks: 0
             
 * [kafka-streams-examples](https://github.com/hustclf/kafka-streams-examples), stars: 1, folks: 0
             
@@ -28,8 +27,12 @@ Total: 7
 * [hustclf.github.io](https://github.com/hustclf/hustclf.github.io), stars: 0, folks: 0
             
 ## Pull Requests
-Total: 12
+Total: 13
 
+RateLimiter
+            
+* [MINOR: update readme](https://github.com/hustclf/RateLimiter/pull/1) \[closed\] \[merged\]
+                
 kafka
             
 * [KAFKA-8187 Bugfix for branch 2.0](https://github.com/apache/kafka/pull/6849) \[open\] \[not_merged\]

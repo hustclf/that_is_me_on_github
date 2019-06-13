@@ -31,8 +31,7 @@ class Render:
 
     @staticmethod
     def _render_user(user_info: NamedUser):
-        return """
-# That Is Me On Github
+        return """# That Is Me On Github
 ## User Info
 username: [{}]({})
 
@@ -208,19 +207,32 @@ def that_is_me_on_github():
     help="Repositories you want to collect, default all repositories related with username",
 )
 @click.option(
+    "--do_auth",
+    default=False,
+    help="Apply github auth info will get a higher rate limit for github api, which is suggested.",
+)
+@click.option(
     "--auth_username",
     default="",
+    prompt="Your github username",
     help="Provide github account to avoid reaching rate limit",
 )
 @click.option(
     "--auth_password",
     default="",
+    prompt="Your github password",
+    hide_input=True,
     help="Provide github account to avoid reaching rate limit",
 )
 def generate(
-    username, auth_username: str, auth_password: str, org_filter: str, repo_filter: str
+    username,
+    do_auth: bool,
+    auth_username: str,
+    auth_password: str,
+    org_filter: str,
+    repo_filter: str,
 ):
-    if auth_username and auth_password:
+    if do_auth and auth_username and auth_password:
         global g
         g = Github(auth_username, auth_password)
 
