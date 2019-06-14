@@ -8,6 +8,8 @@
 
 that_is_me_on_github is a Python CLI application used for collect user's github contribution and generate markdown.
 
+[demo](https://github.com/hustclf/that_is_me_on_github/blob/master/demo.md)
+
 ## Basic setup
 
 Install the requirements:
