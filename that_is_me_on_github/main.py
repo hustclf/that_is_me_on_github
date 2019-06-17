@@ -59,7 +59,7 @@ def generate(
         global g
         g = Github(auth_username, auth_password)
 
-    user = single_user(username)
+    user = single_user(g, username)
     if not user:
         click.echo("User {} Not Found.".format(username))
         click.Abort
@@ -73,9 +73,9 @@ def generate(
 
     Render().render(
         user,
-        owned_repos(username),
-        issues_and_prs(username, type="pr", orgs=org_filter, repos=repo_filter),
-        issues_and_prs(username, type="issue", orgs=org_filter, repos=repo_filter),
+        owned_repos(g, username),
+        issues_and_prs(g, username, type="pr", orgs=org_filter, repos=repo_filter),
+        issues_and_prs(g, username, type="issue", orgs=org_filter, repos=repo_filter),
     )
 
 
