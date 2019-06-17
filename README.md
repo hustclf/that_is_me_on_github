@@ -40,7 +40,7 @@ Without auth info, it is easily to reach the rate limit of github api, you can p
 
 For example:
 ```bash
-$ python -m that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat \\ 
+$ that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat \\ 
 --do_auth True --auth_username <github_username> --auth_password <github password>
 ```
 Replace <github_username> and <github_password> with your own.
@@ -60,7 +60,7 @@ $ pipenv shell
 ```
 
 ### 3. Under development.
-Pycharm is recommended ide.
+Pycharm is the recommended ide.
 
 ### 4. Run tests.
 ```bash
