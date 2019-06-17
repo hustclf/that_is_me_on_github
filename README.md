@@ -14,12 +14,12 @@ that_is_me_on_github is a Python CLI application used for collect user's github 
 
 Install the requirements:
 ```
-$ pip install -r requirements.txt
+$ pip install that_is_me_on_github
 ```
 
 Run the application:
 ```
-$ python -m that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
+$ that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
 ```
 A markdown file named `that_is_me_on_github.md` will be generated under current folder.
 
@@ -47,7 +47,7 @@ Replace <github_username> and <github_password> with your own.
 ## Development
 that_is_me_on_github use pipenv for local development.
 
-### 1. Install pipenv
+### 1.(Optional) Install pipenv
 ```bash
 $ pip install pipenv
 ```
