@@ -11,30 +11,23 @@ that_is_me_on_github is a Python CLI application used for collect user's github 
 
 [demo](https://github.com/hustclf/that_is_me_on_github/blob/master/demo.md)
 
-## Basic setup
-
-Install the requirements:
+## Quick Start
+### Option 1: run with pip
 ```
 $ pip install that_is_me_on_github
-```
-
-Run the application:
-```
 $ that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
 ```
 A markdown file named `that_is_me_on_github.md` will be generated under current folder.
 
-## Docker Support
+### Option 2: run with Docker
 **Notice: docker will create a folder automatically when not exist. To aovid it, We should create an empty file manually.**
-
-Run with docker
 ```
 $ docker pull hustclf/that_is_me_on_github
 $ touch ~/result.md
 $ docker run -it --rm -v ~/result.md:/usr/src/that_is_me_on_github/that_is_me_on_github.mdhustclf/that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat > markdown.md
 ```
 
-## Notice:
+## Notice: provided with github auth info:
 `--auth_username` and `--auth_password` are optional parameters. 
 Without auth info, it is easily to reach the rate limit of github api, you can provide your account to avoid it.
 
