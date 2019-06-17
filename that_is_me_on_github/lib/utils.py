@@ -4,6 +4,7 @@ from github.Commit import Commit
 from github.Issue import Issue
 from github.NamedUser import NamedUser
 from github.Repository import Repository
+from github import Github
 
 # build query by params
 def build_query(params: str) -> str:
@@ -11,12 +12,12 @@ def build_query(params: str) -> str:
 
 
 # get user info by username
-def single_user(username) -> NamedUser:
+def single_user(g: Github, username: str) -> NamedUser:
     return g.get_user(username)
 
 
 # get repos owned by username
-def owned_repos(username, is_public=True) -> List[Repository]:
+def owned_repos(g: Github, username, is_public=True) -> List[Repository]:
     params = ["user:{}".format(username)]
 
     if is_public:
@@ -28,7 +29,7 @@ def owned_repos(username, is_public=True) -> List[Repository]:
 
 
 # get commits authored by username and filtered by certain repos or organizations
-def commits(username, is_public=True, orgs=[], repos=[]) -> List[Commit]:
+def commits(g: Github, username, is_public=True, orgs=[], repos=[]) -> List[Commit]:
     params = ["author:{}".format(username)]
     if is_public:
         params.append("is:public")
@@ -48,7 +49,7 @@ def commits(username, is_public=True, orgs=[], repos=[]) -> List[Commit]:
 
 # get issues or prs authored by username and filtered by certain repos and organizations
 def issues_and_prs(
-    username, is_public=True, type="", orgs=[], repos=[]
+    g: Github, username, is_public=True, type="", orgs=[], repos=[]
 ) -> Dict[str, List[Issue]]:
     params = ["author:{}".format(username)]
 
