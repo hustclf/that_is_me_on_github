@@ -1,4 +1,5 @@
 # that_is_me_on_github
+![PyPI](https://img.shields.io/pypi/v/that_is_me_on_github.svg)
 [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![CircleCI](https://circleci.com/gh/hustclf/that_is_me_on_github.svg?style=svg)](https://circleci.com/gh/hustclf/that_is_me_on_github)
 [![](https://images.microbadger.com/badges/image/hustclf/that_is_me_on_github.svg)](https://microbadger.com/images/hustclf/that_is_me_on_github "Get your own image badge on microbadger.com")
