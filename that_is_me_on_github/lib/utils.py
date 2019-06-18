@@ -49,7 +49,7 @@ def commits(g: Github, username, is_public=True, orgs=[], repos=[]) -> List[Comm
 
 # get issues or prs authored by username and filtered by certain repos and organizations
 def issues_and_prs(
-    g: Github, username, is_public=True, type="", orgs=[], repos=[]
+    g: Github, username: str, is_public=True, type="", orgs=[], repos=[]
 ) -> Dict[str, List[Issue]]:
     params = ["author:{}".format(username)]
 

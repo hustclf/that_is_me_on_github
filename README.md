@@ -21,10 +21,10 @@ A markdown file named `that_is_me_on_github.md` will be generated under current 
 
 ### Option 2: run with Docker
 **Notice: docker will create a folder automatically when not exist. To aovid it, We should create an empty file manually.**
-```
+```bash
 $ docker pull hustclf/that_is_me_on_github
 $ touch ~/result.md
-$ docker run -it --rm -v ~/result.md:/usr/src/that_is_me_on_github/that_is_me_on_github.mdhustclf/that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat > markdown.md
+$ docker run -it --rm -v ~/result.md:/usr/src/that_is_me_on_github/that_is_me_on_github.md hustclf/that_is_me_on_github generate --username hustclf --org_filter apache --repo_filter hustclf/RateLimiter,ing-bank/flink-deployer,edenhill/kafkacat
 ```
 
 ## Notice: provided with github auth info:
