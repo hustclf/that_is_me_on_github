@@ -11,8 +11,8 @@ class Render:
         self,
         user_info: NamedUser,
         repos: List[Repository],
-        prs: List[Issue],
-        issues: List[Issue],
+        prs: Dict[str, List[Issue]],
+        issues: Dict[str, List[Issue]],
     ):
         tpl = self._render_user(user_info)
         tpl += self._render_repos(repos)
