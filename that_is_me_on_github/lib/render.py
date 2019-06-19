@@ -1,3 +1,4 @@
+import click
 from typing import List
 from typing import Dict
 from github.Issue import Issue
@@ -22,6 +23,8 @@ class Render:
         f = open(path, "w+")
         f.write(tpl)
         f.close()
+
+        click.echo("Finished")
 
     @staticmethod
     def _render_user(user_info: NamedUser):
