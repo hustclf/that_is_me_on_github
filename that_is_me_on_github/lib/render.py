@@ -1,4 +1,3 @@
-import click
 from typing import List
 from typing import Dict
 from github.Issue import Issue
@@ -13,15 +12,14 @@ class Render:
         repos: List[Repository],
         prs: Dict[str, List[Issue]],
         issues: Dict[str, List[Issue]],
+        path: str,
     ):
         tpl = self._render_user(user_info)
         tpl += self._render_repos(repos)
         tpl += self._render_prs(prs)
         tpl += self._render_issues(issues)
 
-        click.echo(tpl)
-
-        f = open("that_is_me_on_github.md", "w+")
+        f = open(path, "w+")
         f.write(tpl)
         f.close()
 
