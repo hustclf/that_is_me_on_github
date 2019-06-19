@@ -6,5 +6,10 @@ jobs:
     steps:
       - checkout
       - run: sudo pip install -r requirements.txt
-      - run: pytest tests/
-
+      - run: pytest --cov=./ tests/
+      # collect test data
+      - run:
+          name: "Save test results"
+          command: |
+            bash <(curl -s https://codecov.io/bash) -t 3de3115f-1a24-4fe9-b859-22cd8f03017f
+          when: always

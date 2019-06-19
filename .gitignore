@@ -1,3 +1,7 @@
-.idea/*
-__pycache__/
-.pytest_cache/
+.idea
+__pycache__
+.pytest_cache
+build
+dist
+that_is_me_on_github.egg-info
+that_is_me_on_github.md
