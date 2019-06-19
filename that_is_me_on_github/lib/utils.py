@@ -6,6 +6,7 @@ from github.NamedUser import NamedUser
 from github.Repository import Repository
 from github import Github
 
+
 # build query by params
 def build_query(params: str) -> str:
     return " ".join(params)
