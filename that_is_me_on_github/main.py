@@ -1,8 +1,8 @@
 import click
 from github import RateLimitExceededException
-from that_is_me_on_github.config import VERSION
-from that_is_me_on_github.lib.render import Render
-from that_is_me_on_github.lib.utils import *
+from config import VERSION
+from lib.render import Render
+from lib.utils import *
 import os
 
 
