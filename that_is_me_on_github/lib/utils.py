@@ -80,11 +80,12 @@ def issues_and_prs(
 
 
 def handle_tasks(tasks):
-    with ProcessPoolExecutor() as executor:
+    with ProcessPoolExecutor(max_workers=5) as executor:
         futures = []
         for task in tasks:
-            fn, args, kwargs = task["func"], task["args"], task["kwargs"]
-            future = executor.submit(fn, args=args, kwargs=kwargs)
+            fn, args = task["func"], task["args"]
+            kwargs = task.get("kwargs", {})  # type: dict
+            future = executor.submit(fn, *args, **kwargs)
             futures.append(future)
         results = [future.result() for future in futures]
         return results

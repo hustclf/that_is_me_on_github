@@ -121,7 +121,7 @@ def generate(
             path,
         )
         end = time()
-        click.echo(f"waste time is {end-start} seconds")
+        click.echo(f"cost time {end-start} seconds")
     except RateLimitExceededException:
         click.echo(
             "Github rate limit reached, Please provide username, password or api_token (not support yet), and try again"
