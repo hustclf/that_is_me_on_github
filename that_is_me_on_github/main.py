@@ -4,6 +4,7 @@ from config import VERSION
 from lib.render import Render
 from lib.utils import *
 import os
+from time import time
 
 
 @click.group()
@@ -65,6 +66,7 @@ def generate(
     repo_filter: str,
     output: str,
 ):
+    start = time()
     path = os.path.expanduser(output)
     try:
         f = open(path, "w+")
@@ -100,15 +102,26 @@ def generate(
             [item.strip() for item in repo_filter.split(",")] if repo_filter else []
         )
 
+        container = [
+            {"func": owned_repos, "args": [g, username]},
+            {"func": issues_and_prs, "args": [g, username], "kwargs": dict(type="pr",
+                                                                           orgs=org_filter,
+                                                                           repos=repo_filter)},
+            {"func": issues_and_prs, "args": [g, username], "kwargs": dict(type="issue",
+                                                                           orgs=org_filter,
+                                                                           repos=repo_filter)}
+        ]
+        results = handle_tasks(container)
+
         Render().render(
             user,
-            owned_repos(g, username),
-            issues_and_prs(g, username, type="pr", orgs=org_filter, repos=repo_filter),
-            issues_and_prs(
-                g, username, type="issue", orgs=org_filter, repos=repo_filter
-            ),
+            results[0],
+            results[1],
+            results[2],
             path,
         )
+        end = time()
+        click.echo(f"waste time is {end-start} seconds")
     except RateLimitExceededException:
         click.echo(
             "Github rate limit reached, Please provide username, password or api_token (not support yet), and try again"

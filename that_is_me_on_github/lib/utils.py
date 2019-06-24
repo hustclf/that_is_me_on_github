@@ -1,3 +1,5 @@
+from concurrent.futures import ProcessPoolExecutor
+
 from typing import List
 from typing import Dict
 from github.Commit import Commit
@@ -20,10 +22,10 @@ def single_user(g: Github, username: str) -> NamedUser:
 # get repos owned by username
 def owned_repos(g: Github, username, is_public=True) -> List[Repository]:
     params = ["user:{}".format(username)]
-
+    
     if is_public:
         params.append("is:public")
-
+    
     return [
         repo for repo in g.search_repositories(build_query(params), "stars", "desc")
     ]
@@ -34,14 +36,14 @@ def commits(g: Github, username, is_public=True, orgs=[], repos=[]) -> List[Comm
     params = ["author:{}".format(username)]
     if is_public:
         params.append("is:public")
-
+    
     if orgs or repos:
         for org in orgs:
             params.append("org:{}".format(org))
-
+        
         for repo in repos:
             params.append("repo:{}".format(repo))
-
+    
     return [
         commit
         for commit in g.search_commits(build_query(params), "author-date", "desc")
@@ -50,28 +52,39 @@ def commits(g: Github, username, is_public=True, orgs=[], repos=[]) -> List[Comm
 
 # get issues or prs authored by username and filtered by certain repos and organizations
 def issues_and_prs(
-    g: Github, username: str, is_public=True, type="", orgs=[], repos=[]
+        g: Github, username: str, is_public=True, type="", orgs=[], repos=[]
 ) -> Dict[str, List[Issue]]:
     params = ["author:{}".format(username)]
-
+    
     if type:
         params.append("type:{}".format(type))
-
+    
     if is_public:
         params.append("is:public")
-
+    
     if orgs or repos:
         for org in orgs:
             params.append("org:{}".format(org))
-
+        
         for repo in repos:
             params.append("repo:{}".format(repo))
-
+    
     issues_and_prs = {}
     for issue_or_pr in g.search_issues(build_query(params), "updated", "desc"):
         if issue_or_pr.repository.name not in issues_and_prs:
             issues_and_prs[issue_or_pr.repository.name] = [issue_or_pr]
         else:
             issues_and_prs[issue_or_pr.repository.name].append(issue_or_pr)
-
+    
     return issues_and_prs
+
+
+def handle_tasks(tasks):
+    with ProcessPoolExecutor() as executor:
+        futures = []
+        for task in tasks:
+            fn, args, kwargs = task["func"], task["args"], task["kwargs"]
+            future = executor.submit(fn, args=args, kwargs=kwargs)
+            futures.append(future)
+        results = [future.result() for future in futures]
+        return results
