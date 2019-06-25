@@ -87,13 +87,6 @@ def generate(
             g = Github(auth_username, auth_password)
         else:
             g = Github()
-        t1 = time()
-        user = single_user(g, username)
-        t2 = time()
-        click.echo(f"request user cost time: {t2-t1}")
-        if not user:
-            click.echo("User {} Not Found.".format(username))
-            raise click.Abort()
 
         click.echo("Please wait for a few seconds.")
 
@@ -111,16 +104,21 @@ def generate(
                                                                            repos=repo_filter)},
             {"func": issues_and_prs, "args": [g, username], "kwargs": dict(type="issue",
                                                                            orgs=org_filter,
-                                                                           repos=repo_filter)}
+                                                                           repos=repo_filter)},
+            {"func": single_user, "args": [g, username]},
         ]
         t3 = time()
         results = handle_tasks(container)
+        if not results[3]:
+            click.echo("User {} Not Found.".format(username))
+            raise click.Abort()
+            
         t4 = time()
         click.echo(f"request github cost time: {t4-t3}")
         
         t5 = time()
         Render().render(
-            user,
+            results[3],
             results[0],
             results[1],
             results[2],
