@@ -1,4 +1,4 @@
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 
 from typing import List
 from typing import Dict
@@ -80,7 +80,7 @@ def issues_and_prs(
 
 
 def handle_tasks(tasks):
-    with ProcessPoolExecutor(max_workers=5) as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         futures = []
         for task in tasks:
             fn, args = task["func"], task["args"]
