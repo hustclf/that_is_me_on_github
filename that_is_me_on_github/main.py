@@ -102,14 +102,15 @@ def generate(
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
                                                                        'orgs': [],
                                                                        'repos': []}},
+            {"func": single_user, "args": [g, username]},
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "issue",
                                                                        'orgs': [],
                                                                        'repos': []}},
-            {"func": single_user, "args": [g, username]},
+            
         ]
         t3 = time()
         results = handle_tasks(container)
-        if not results[3]:
+        if not results[2]:
             click.echo("User {} Not Found.".format(username))
             raise click.Abort()
         
@@ -118,10 +119,10 @@ def generate(
         
         t5 = time()
         Render().render(
-            results[3],
+            results[2],
             results[0],
             results[1],
-            results[2],
+            results[3],
             path,
         )
         t6 = time()
