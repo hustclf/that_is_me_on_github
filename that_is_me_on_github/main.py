@@ -100,12 +100,12 @@ def generate(
         container = [
             {"func": owned_repos, "args": [g, username]},
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
-                                                                       'orgs': [],
-                                                                       'repos': []}},
+                                                                       'orgs': org_filter,
+                                                                       'repos': repo_filter}},
             {"func": single_user, "args": [g, username]},
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "issue",
-                                                                       'orgs': [],
-                                                                       'repos': []}},
+                                                                       'orgs': org_filter,
+                                                                       'repos': repo_filter}},
             
         ]
         t3 = time()
