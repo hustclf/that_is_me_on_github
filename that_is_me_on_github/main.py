@@ -87,8 +87,10 @@ def generate(
             g = Github(auth_username, auth_password)
         else:
             g = Github()
-
+        t1 = time()
         user = single_user(g, username)
+        t2 = time()
+        click.echo(f"request user cost time: {t2-t1}")
         if not user:
             click.echo("User {} Not Found.".format(username))
             raise click.Abort()
@@ -111,8 +113,12 @@ def generate(
                                                                            orgs=org_filter,
                                                                            repos=repo_filter)}
         ]
+        t3 = time()
         results = handle_tasks(container)
-
+        t4 = time()
+        click.echo(f"request github cost time: {t4-t3}")
+        
+        t5 = time()
         Render().render(
             user,
             results[0],
@@ -120,6 +126,8 @@ def generate(
             results[2],
             path,
         )
+        t6 = time()
+        click.echo(f"render cost time: {t6 - t5}")
         end = time()
         click.echo(f"cost time {end-start} seconds")
     except RateLimitExceededException:
