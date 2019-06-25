@@ -99,14 +99,14 @@ def generate(
         
         container = [
             {"func": owned_repos, "args": [g, username]},
-            {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
-                                                                       'orgs': org_filter,
-                                                                       'repos': repo_filter}},
-            {"func": single_user, "args": [g, username]},
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "issue",
                                                                        'orgs': org_filter,
                                                                        'repos': repo_filter}},
-            
+            {"func": single_user, "args": [g, username]},
+            {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
+                                                                       'orgs': org_filter,
+                                                                       'repos': repo_filter}},
+
         ]
         t3 = time()
         results = handle_tasks(container)
@@ -121,8 +121,8 @@ def generate(
         Render().render(
             results[2],
             results[0],
-            results[1],
             results[3],
+            results[1],
             path,
         )
         t6 = time()
