@@ -58,13 +58,13 @@ def version():
     help="The output markdown file path. default value is `./that_is_me_on_github.md`",
 )
 def generate(
-    username: str,
-    do_auth: bool,
-    auth_username: str,
-    auth_password: str,
-    org_filter: str,
-    repo_filter: str,
-    output: str,
+        username: str,
+        do_auth: bool,
+        auth_username: str,
+        auth_password: str,
+        org_filter: str,
+        repo_filter: str,
+        output: str,
 ):
     start = time()
     path = os.path.expanduser(output)
@@ -74,7 +74,7 @@ def generate(
     except IOError:
         click.echo("Error: output path not exist and not creatable.")
         raise click.Abort()
-
+    
     try:
         if do_auth:
             if not auth_username:
@@ -83,28 +83,28 @@ def generate(
                 auth_password = click.prompt(
                     "Your github password", type=str, hide_input=True
                 )
-
+            
             g = Github(auth_username, auth_password)
         else:
             g = Github()
-
+        
         click.echo("Please wait for a few seconds.")
-
+        
         org_filter = (
             [item.strip() for item in org_filter.split(",")] if org_filter else []
         )
         repo_filter = (
             [item.strip() for item in repo_filter.split(",")] if repo_filter else []
         )
-
+        
         container = [
             {"func": owned_repos, "args": [g, username]},
-            {"func": issues_and_prs, "args": [g, username], "kwargs": dict(type="pr",
-                                                                           orgs=org_filter,
-                                                                           repos=repo_filter)},
-            {"func": issues_and_prs, "args": [g, username], "kwargs": dict(type="issue",
-                                                                           orgs=org_filter,
-                                                                           repos=repo_filter)},
+            {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
+                                                                       'orgs': [],
+                                                                       'repos': []}},
+            {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "issue",
+                                                                       'orgs': [],
+                                                                       'repos': []}},
             {"func": single_user, "args": [g, username]},
         ]
         t3 = time()
@@ -112,9 +112,9 @@ def generate(
         if not results[3]:
             click.echo("User {} Not Found.".format(username))
             raise click.Abort()
-            
+        
         t4 = time()
-        click.echo(f"request github cost time: {t4-t3}")
+        click.echo(f"request github cost time: {t4 - t3}")
         
         t5 = time()
         Render().render(
@@ -127,7 +127,7 @@ def generate(
         t6 = time()
         click.echo(f"render cost time: {t6 - t5}")
         end = time()
-        click.echo(f"cost time {end-start} seconds")
+        click.echo(f"cost time {end - start} seconds")
     except RateLimitExceededException:
         click.echo(
             "Github rate limit reached, Please provide username, password or api_token (not support yet), and try again"
