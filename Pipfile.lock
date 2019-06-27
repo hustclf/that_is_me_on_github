@@ -260,13 +260,6 @@
             "index": "pypi",
             "version": "==1.12.0"
         },
-        "that-is-me-on-github": {
-            "hashes": [
-                "sha256:c9ba35ed8d46ee0195ec0bf8cd311490836c9266635f1f4ab07215f70eafd3f4"
-            ],
-            "index": "pypi",
-            "version": "==0.0.2"
-        },
         "tqdm": {
             "hashes": [
                 "sha256:0a860bf2683fdbb4812fe539a6c22ea3f1777843ea985cb8c3807db448a0f7ab",
