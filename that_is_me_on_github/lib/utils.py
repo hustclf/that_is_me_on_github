@@ -1,5 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
-
 from typing import List
 from typing import Dict
 from github.Commit import Commit
@@ -7,6 +5,8 @@ from github.Issue import Issue
 from github.NamedUser import NamedUser
 from github.Repository import Repository
 from github import Github
+
+from concurrent.futures import ThreadPoolExecutor
 
 
 # build query by params

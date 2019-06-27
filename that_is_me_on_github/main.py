@@ -66,7 +66,6 @@ def generate(
         repo_filter: str,
         output: str,
 ):
-    start = time()
     path = os.path.expanduser(output)
     try:
         f = open(path, "w+")
@@ -106,18 +105,13 @@ def generate(
             {"func": issues_and_prs, "args": [g, username], "kwargs": {'type': "pr",
                                                                        'orgs': org_filter,
                                                                        'repos': repo_filter}},
-
         ]
-        t3 = time()
+        
         results = handle_tasks(container)
         if not results[2]:
             click.echo("User {} Not Found.".format(username))
             raise click.Abort()
         
-        t4 = time()
-        click.echo(f"request github cost time: {t4 - t3}")
-        
-        t5 = time()
         Render().render(
             results[2],
             results[0],
@@ -125,10 +119,7 @@ def generate(
             results[1],
             path,
         )
-        t6 = time()
-        click.echo(f"render cost time: {t6 - t5}")
-        end = time()
-        click.echo(f"cost time {end - start} seconds")
+    
     except RateLimitExceededException:
         click.echo(
             "Github rate limit reached, Please provide username, password or api_token (not support yet), and try again"
