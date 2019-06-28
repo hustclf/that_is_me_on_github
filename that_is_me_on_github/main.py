@@ -1,8 +1,9 @@
 import click
-from github import RateLimitExceededException
+from github import RateLimitExceededException, Github
 from config import VERSION
 from lib.render import Render
 from lib.utils import *
+from urllib3.util.retry import Retry
 import os
 
 
@@ -56,6 +57,28 @@ def version():
     type=click.Path(),
     help="The output markdown file path. default value is `./that_is_me_on_github.md`",
 )
+@click.option(
+    "-o",
+    "--output",
+    default="that_is_me_on_github.md",
+    type=click.Path(),
+    help="The output markdown file path. default value is `./that_is_me_on_github.md`",
+)
+@click.option(
+    "--timeout",
+    default=None,
+    type=str,
+    help="Provide github account to avoid reaching rate limit.",
+)
+@click.option(
+    "--timeout",
+    default=5,
+    type=int,
+    help="Timeout in seconds for per request, default 5.",
+)
+@click.option(
+    "--retry", default=1, type=int, help="Retry times for per request, default 1."
+)
 def generate(
     username: str,
     do_auth: bool,
@@ -64,6 +87,8 @@ def generate(
     org_filter: str,
     repo_filter: str,
     output: str,
+    timeout: int,
+    retry: int,
 ):
     path = os.path.expanduser(output)
     try:
@@ -82,9 +107,11 @@ def generate(
                     "Your github password", type=str, hide_input=True
                 )
 
-            g = Github(auth_username, auth_password)
+            g = Github(
+                auth_username, auth_password, timeout=int(timeout), retry=Retry(retry)
+            )
         else:
-            g = Github()
+            g = Github(timeout=int(timeout), retry=Retry(retry))
 
         user = single_user(g, username)
         if not user:
