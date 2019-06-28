@@ -58,19 +58,6 @@ def version():
     help="The output markdown file path. default value is `./that_is_me_on_github.md`",
 )
 @click.option(
-    "-o",
-    "--output",
-    default="that_is_me_on_github.md",
-    type=click.Path(),
-    help="The output markdown file path. default value is `./that_is_me_on_github.md`",
-)
-@click.option(
-    "--timeout",
-    default=None,
-    type=str,
-    help="Provide github account to avoid reaching rate limit.",
-)
-@click.option(
     "--timeout",
     default=5,
     type=int,
@@ -108,7 +95,10 @@ def generate(
                 )
 
             g = Github(
-                auth_username, auth_password, timeout=int(timeout), retry=Retry(retry)
+                login_or_token=auth_username,
+                password=auth_password,
+                timeout=int(timeout),
+                retry=Retry(retry),
             )
         else:
             g = Github(timeout=int(timeout), retry=Retry(retry))
