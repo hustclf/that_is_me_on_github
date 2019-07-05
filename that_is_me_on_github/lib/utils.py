@@ -6,6 +6,7 @@ from github.NamedUser import NamedUser
 from github.Repository import Repository
 from github import Github
 
+from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -79,13 +80,23 @@ def issues_and_prs(
     return issues_and_prs
 
 
+class StrEnum(str, Enum):
+    def __new__(cls, *args):
+        for arg in args:
+            if not isinstance(arg, str):
+                raise TypeError('Not str: {}'.format(arg))
+        return super(StrEnum, cls).__new__(cls, *args)
+
+
 def handle_tasks(tasks):
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = []
         for task in tasks:
             fn, args = task["func"], task["args"]
             kwargs = task.get("kwargs", {})  # type: dict
+            name = task.get("name", fn.__name__)
             future = executor.submit(fn, *args, **kwargs)
+            setattr(future, "name", name)
             futures.append(future)
-        results = [future.result() for future in futures]
+        results = {future.name: future.result() for future in futures}
         return results
