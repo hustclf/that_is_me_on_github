@@ -1,10 +1,11 @@
 import click
-from github import RateLimitExceededException, Github
+import os
+from config import TaskNameEnum
 from config import VERSION
+from github import RateLimitExceededException
 from lib.render import Render
 from lib.utils import *
 from urllib3.util.retry import Retry
-import os
 
 
 @click.group()
@@ -67,15 +68,15 @@ def version():
     "--retry", default=1, type=int, help="Retry times for per request, default 1."
 )
 def generate(
-    username: str,
-    do_auth: bool,
-    auth_username: str,
-    auth_password: str,
-    org_filter: str,
-    repo_filter: str,
-    output: str,
-    timeout: int,
-    retry: int,
+        username: str,
+        do_auth: bool,
+        auth_username: str,
+        auth_password: str,
+        org_filter: str,
+        repo_filter: str,
+        output: str,
+        timeout: int,
+        retry: int,
 ):
     path = os.path.expanduser(output)
     try:
@@ -103,13 +104,7 @@ def generate(
         else:
             g = Github(timeout=int(timeout), retry=Retry(retry))
 
-        user = single_user(g, username)
-        if not user:
-            click.echo("User {} Not Found.".format(username))
-            raise click.Abort()
-
         click.echo("Please wait for a few seconds.")
-
         org_filter = (
             [item.strip() for item in org_filter.split(",")] if org_filter else []
         )
@@ -117,15 +112,51 @@ def generate(
             [item.strip() for item in repo_filter.split(",")] if repo_filter else []
         )
 
-        Render().render(
-            user,
-            owned_repos(g, username),
-            issues_and_prs(g, username, type="pr", orgs=org_filter, repos=repo_filter),
-            issues_and_prs(
-                g, username, type="issue", orgs=org_filter, repos=repo_filter
-            ),
-            path,
-        )
+        containers = [
+            {
+                "name": TaskNameEnum.OWNED_REPOS,
+                "func": owned_repos,
+                "args": [g, username]
+            },
+            {
+                "name": TaskNameEnum.ISSUE,
+                "func": issues_and_prs,
+                "args": [g, username],
+                "kwargs":
+                    {
+                        "type": "issue",
+                        "orgs": org_filter,
+                        "repos": repo_filter
+                    }
+            },
+            {
+                "name": TaskNameEnum.USER,
+                "func": single_user,
+                "args": [g, username]
+            },
+
+            {
+                "name": TaskNameEnum.PR,
+                "func": issues_and_prs,
+                "args": [g, username],
+                "kwargs":
+                    {
+                        "type": "pr",
+                        "orgs": org_filter,
+                        "repos": repo_filter
+                    }
+            },
+        ]
+
+        results = handle_tasks(containers)
+        user, repos, prs, issues = results[TaskNameEnum.USER], \
+                                   results[TaskNameEnum.OWNED_REPOS], \
+                                   results[TaskNameEnum.PR], \
+                                   results[TaskNameEnum.ISSUE]
+        if not user:
+            click.echo("User {} Not Found.".format(username))
+            raise click.Abort()
+        Render().render(user, repos, prs, issues, path)
     except RateLimitExceededException:
         click.echo(
             "Github rate limit reached, Please provide username, password or api_token (not support yet), and try again"

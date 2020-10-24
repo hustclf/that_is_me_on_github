@@ -1,10 +1,12 @@
-from typing import List
-from typing import Dict
+from concurrent.futures import ThreadPoolExecutor
+from enum import Enum
+from github import Github
 from github.Commit import Commit
 from github.Issue import Issue
 from github.NamedUser import NamedUser
 from github.Repository import Repository
-from github import Github
+from typing import Dict
+from typing import List
 
 
 # build query by params
@@ -50,7 +52,7 @@ def commits(g: Github, username, is_public=True, orgs=[], repos=[]) -> List[Comm
 
 # get issues or prs authored by username and filtered by certain repos and organizations
 def issues_and_prs(
-    g: Github, username: str, is_public=True, type="", orgs=[], repos=[]
+        g: Github, username: str, is_public=True, type="", orgs=[], repos=[]
 ) -> Dict[str, List[Issue]]:
     params = ["author:{}".format(username)]
 
@@ -75,3 +77,25 @@ def issues_and_prs(
             issues_and_prs[issue_or_pr.repository.name].append(issue_or_pr)
 
     return issues_and_prs
+
+
+class StrEnum(str, Enum):
+    def __new__(cls, *args):
+        for arg in args:
+            if not isinstance(arg, str):
+                raise TypeError('Not str: {}'.format(arg))
+        return super(StrEnum, cls).__new__(cls, *args)
+
+
+def handle_tasks(tasks):
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        futures = []
+        for task in tasks:
+            fn, args = task["func"], task["args"]
+            kwargs = task.get("kwargs", {})  # type: dict
+            name = task.get("name", fn.__name__)
+            future = executor.submit(fn, *args, **kwargs)
+            setattr(future, "name", name)
+            futures.append(future)
+        results = {future.name: future.result() for future in futures}
+        return results
