@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "570f27f82c99aece20dcc5b8564ecf3ab475b1b95ed6857fd67fa55e1cf53332"
+            "sha256": "0f7fce7f4b99cfd8bef4812f0eb996a41b860e9750be01a7d168a18a5682cb28"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -152,10 +152,10 @@
         },
         "packaging": {
             "hashes": [
-                "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3",
-                "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"
+                "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5",
+                "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"
             ],
-            "version": "==20.3"
+            "version": "==20.9"
         },
         "pkginfo": {
             "hashes": [
@@ -190,11 +190,11 @@
         },
         "pygments": {
             "hashes": [
-                "sha256:71e430bc85c88a430f000ac1d9b331d2407f681d6f6aec95e8bcfbc3df5b0127",
-                "sha256:881c4c157e45f30af185c1ffe8d549d48ac9127433f2c380c24b84572ad66297"
+                "sha256:bc9591213a8f0e0ca1a5e68a479b4887fdc3e75d0774e5c71c31920c427de435",
+                "sha256:df49d09b498e83c1a73128295860250b0b7edd4c723a32e9bc0d295c7c2ec337"
             ],
             "index": "pypi",
-            "version": "==2.4.2"
+            "version": "==2.7.4"
         },
         "pyjwt": {
             "hashes": [
